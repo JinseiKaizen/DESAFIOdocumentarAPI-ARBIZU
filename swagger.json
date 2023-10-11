@@ -1,0 +1,142 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Proyecto final",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/productos": {
+      "get": {
+        "tags": ["Productos"],
+        "summary": "Obtiene una lista de productos",
+        "description": "Obtiene una lista de productos, ordenados por nombre.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número de página a consultar.",
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Número de productos por página.",
+            "type": "integer",
+            "format": "int32",
+            "default": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Productos obtenidos correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/Producto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Productos"],
+        "summary": "Crea un nuevo producto",
+        "description": "Crea un nuevo producto.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                $ref: "#/components/schemas/Producto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado correctamente",
+            "content": {
+              "application/json": {
+                $ref: "#/components/schemas/Producto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carrito": {
+      "get": {
+        "tags": ["Carrito"],
+        "summary": "Obtiene el contenido del carrito",
+        "description": "Obtiene el contenido del carrito del usuario actual.",
+        "responses": {
+          "200": {
+            "description": "Contenido del carrito obtenido correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  type: "array",
+                  items: {
+                    $ref: "#/components/schemas/Producto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Carrito"],
+        "summary": "Agrega un producto al carrito",
+        "description": "Agrega un producto al carrito del usuario actual.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                $ref: "#/components/schemas/Producto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto agregado al carrito correctamente",
+            "content": {
+              "application/json": {
+                $ref: "#/components/schemas/Producto"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Producto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "precio": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
+
